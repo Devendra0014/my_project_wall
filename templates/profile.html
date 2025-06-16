@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile - My Project Wall{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="p-4 bg-white shadow-sm rounded">
+    <h2 class="mb-4 text-primary fw-semibold">👤 Edit Your Profile</h2>
+
+    <form method="POST" action="/profile">
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" name="name" class="form-control" value="{{ user.name }}" required>
+      </div>
+
+      <!-- Username (read-only or optional update) -->
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" value="{{ user.username }}" readonly>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+      </div>
+
+      <!-- DOB -->
+      <div class="mb-3">
+        <label class="form-label">Date of Birth</label>
+        <input type="date" name="dob" class="form-control" value="{{ user.dob }}" required>
+      </div>
+
+      <!-- Program -->
+      <div class="mb-3">
+        <label class="form-label">Program</label>
+        <select name="program" class="form-select" required>
+          <option value="Diploma" {% if user.program == 'Diploma' %}selected{% endif %}>Diploma</option>
+          <option value="Degree" {% if user.program == 'Degree' %}selected{% endif %}>Degree</option>
+          <option value="Other" {% if user.program == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+      </div>
+
+      <!-- Course -->
+      <div class="mb-3">
+        <label class="form-label">Course</label>
+        <input type="text" name="course" class="form-control" value="{{ user.course }}" required>
+      </div>
+
+      <!-- Public Profile + Copy Link -->
+      {% if current_user.is_authenticated %}
+      <div class="mb-4 d-flex align-items-center justify-content-between">
+        <a href="{{ url_for('ops.public_profile', username=current_user.username) }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+          🔗 View Public Profile
+        </a>
+        <button type="button" class="btn btn-outline-primary btn-sm" onclick="copyLink()">📋 Copy Profile Link</button>
+      </div>
+
+      <script>
+        function copyLink() {
+          const url = "{{ request.url_root }}user/{{ current_user.username }}";
+          navigator.clipboard.writeText(url);
+          alert("✅ Profile link copied: " + url);
+        }
+      </script>
+      {% endif %}
+
+      <!-- Submit -->
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary">💾 Update Profile</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Home - My Project Wall{% endblock %}
+
+{% block content %}
+
+<!-- ✅ Hero Section -->
+<section class="text-center py-5 bg-white rounded shadow animate__animated animate__fadeInDown">
+  <h1 class="display-5 fw-bold">📋 Welcome to <span class="text-primary">My Project Wall+</span></h1>
+  <p class="lead text-muted mb-4">Organize, showcase, and manage all your coding projects in one place.</p>
+  <div class="d-flex justify-content-center gap-3 flex-wrap">
+    <a href="/signup" class="btn btn-success btn-lg px-4">🚀 Get Started</a>
+    <a href="/login" class="btn btn-outline-primary btn-lg px-4">🔐 Login</a>
+  </div>
+</section>
+
+<!-- ✅ Features Section -->
+<section class="mt-5 py-5 bg-light rounded shadow animate__animated animate__fadeInUp">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-semibold text-dark">✨ Why Use My Project Wall?</h2>
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="p-3 h-100">
+          <h4 class="mb-3">🧩 Easy Project Tracking</h4>
+          <p class="text-muted small">Track all your coding projects with title, description, GitHub link, and tech stack.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="p-3 h-100">
+          <h4 class="mb-3">📊 Clean Dashboard</h4>
+          <p class="text-muted small">Visual layout with edit/delete controls and animated cards for a great experience.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="p-3 h-100">
+          <h4 class="mb-3">👤 Developer Profile</h4>
+          <p class="text-muted small">Edit profile, show your avatar, and manage your stream, program, and course info.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

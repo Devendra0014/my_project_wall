@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="fw-bold">📌 Your Projects</h3>
+  <a href="/add" class="btn btn-primary">+ Add Project</a>
+</div>
+
+{% if projects %}
+  <div class="row">
+    {% for project in projects %}
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4 animate__animated animate__fadeInUp">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">{{ project.title }}</h5>
+              
+              <!-- ⭐ Favorite Toggle (✅ FIXED) -->
+              <a href="{{ url_for('ops.toggle_favorite', id=project.id) }}" title="Mark Favorite">
+                {% if project.is_favorite %}
+                  <span style="font-size: 1.3rem;">⭐</span>
+                {% else %}
+                  <span style="font-size: 1.3rem;">☆</span>
+                {% endif %}
+              </a>
+            </div>
+
+            <p class="card-text mt-2">{{ project.description }}</p>
+
+            {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" class="d-block mb-2">
+                <img src="{{ url_for('static', filename='github.jpeg') }}" alt="GitHub" style="width: 80px; height: 80px;">
+                <small class="text-muted">View on GitHub</small>
+              </a>
+            {% endif %}
+
+            {% if project.tech_stack %}
+              <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+            {% endif %}
+
+            <!-- Team Members -->
+            <p class="mt-2">
+              <strong>Team Members:</strong><br>
+              {% if project.team_members.strip() %}
+                {% for member in project.team_members.split(',') %}
+                  <span class="badge bg-secondary me-1">{{ member.strip() }}</span>
+                {% endfor %}
+              {% else %}
+                <span class="badge bg-light text-muted border border-secondary fst-italic">Enter team member names</span>
+              {% endif %}
+            </p>
+
+            <div class="mt-3 d-flex justify-content-between">
+              <a href="/edit/{{ project.id }}" class="btn btn-sm btn-warning">✏️ Edit</a>
+              <a href="/delete/{{ project.id }}" class="btn btn-sm btn-danger">🗑️ Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">
+    No projects yet. Click <strong>+ Add Project</strong> to get started!
+  </div>
+{% endif %}
+{% endblock %}
