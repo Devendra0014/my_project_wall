@@ -21,14 +21,12 @@
       border-radius: 50%;
       object-fit: cover;
     }
-
     .sticky-top {
       z-index: 1020;
     }
-
     @media (max-width: 576px) {
       .navbar-brand span {
-        display: none; /* Hide text on very small devices */
+        display: none;
       }
       .navbar .form-control {
         width: 100%;
@@ -57,138 +55,13 @@
       </button>
 
       <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
-        <!-- Search -->
+        <!-- 🔍 Search -->
         <form method="GET" action="/user-search" class="d-flex flex-wrap me-3">
           <input type="text" name="username" class="form-control me-2 mb-2 mb-lg-0" placeholder="Search username..." required>
           <button class="btn btn-outline-primary" type="submit">🔍</button>
         </form>
 
-        <!-- User Profile / Auth -->
-        <ul class="navbar-nav align-items-center">
-          {% if current_user.is_authenticated and request.path != '/' %}
-            <li class="nav-item me-3">
-              <span class="nav-link fw-semibold">Welcome, {{ current_user.name.split(' ')[0] }} 👋</span>
-            </li>
-            <li class="nav-item me-3">
-              <a href="/profile" title="Edit Profile">
-                <img src="{{ current_user.avatar_url }}" alt="Profile" class="avatar-img border border-primary shadow-sm">
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a href="/signup" class="btn btn-success btn-sm me-2">Sign Up</a>
-              <a href="/login" class="btn btn-outline-primary btn-sm">Login</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ✅ Flash Messages -->
-  <div class="container mt-3">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-  </div>
-
-  <!-- ✅ Main Content -->
-  <div class="container mt-4 animate__animated animate__fadeIn animate__faster">
-    {% block content %}{% endblock %}
-  </div>
-
-  <!-- ✅ Footer -->
-  {% if show_footer %}
-    <footer class="bg-dark text-light mt-5 pt-4 pb-3">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-4 mb-4">
-            <h5 class="text-white fw-semibold mb-3">About <span class="text-primary">My Project Wall+</span></h5>
-            <p class="small">Built with ❤️ by <strong>EduWarriors</strong> for smart student project management.</p>
-            <p class="small">MIT Licensed • Version <strong class="text-info">v1.0.0</strong></p>
-          </div>
-
-          <div class="col-6 col-sm-6 col-md-4 mb-4">
-            <h5>Links</h5>
-            <ul class="list-unstyled small">
-              <li><a href="/" class="text-decoration-none text-light">🏠 Home</a></li>
-              <li><a href="/docs" class="text-decoration-none text-light">📘 Docs</a></li>
-              <li><a href="/examples" class="text-decoration-none text-light">🧩 Examples</a></li>
-              <li><a href="/themes" class="text-decoration-none text-light">🎨 Themes</a></li>
-              <li><a href="/blog" class="text-decoration-none text-light">📝 Blog</a></li>
-            </ul>
-          </div>
-
-          <div class="col-6 col-sm-6 col-md-4 mb-4">
-            <h5>Community</h5>
-            <ul class="list-unstyled small">
-              <li><a href="/get-started" class="text-decoration-none text-light">🚀 Getting Started</a></li>
-              <li><a href="/starter" class="text-decoration-none text-light">🔧 Starter Template</a></li>
-              <li><a href="/community" class="text-decoration-none text-light">👥 Community</a></li>
-              <li><a href="https://github.com/Devendra0014/my_project_wall" target="_blank" class="text-decoration-none text-light">💬 GitHub</a></li>
-            </ul>
-          </div>
-        </div>
-        <hr class="bg-light">
-        <p class="text-center small mb-0">Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+</p>
-      </div>
-    </footer>
-  {% else %}
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-      <div class="container">
-        Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+
-      </div>
-    </footer>
-  {% endif %}
-
-  <!-- ✅ Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-image/png" href="{{ url_for('static', filename='favicon.png') }}">
-  <style>
-    .avatar-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .sticky-top {
-      z-index: 1020;
-    }
-  </style>
-</head>
-<body class="bg-light">
-
-  <!-- ✅ Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top px-3">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
-        <img src="{{ url_for('static', filename='MPW_logo_only.png') }}" alt="Logo" width="40" height="40" class="rounded shadow-sm">
-        My Project Wall<span class="text-primary">+</span>
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
-        <!-- 🔍 Username Search -->
-        <form method="GET" action="/user-search" class="d-flex me-3">
-          <input type="text" name="username" class="form-control form-control-sm me-2" placeholder="Search username..." required>
-          <button class="btn btn-outline-primary btn-sm" type="submit">🔍</button>
-        </form>
-
+        <!-- 👤 Auth/Profile -->
         <ul class="navbar-nav align-items-center">
           {% if current_user.is_authenticated and request.path != '/' %}
             <li class="nav-item me-3">
@@ -228,7 +101,7 @@ image/png" href="{{ url_for('static', filename='favicon.png') }}">
   </div>
 
   <!-- ✅ Main Content Block -->
-  <div class="container mt-4 animate__animated animate__fadeIn">
+  <div class="container mt-4 animate__animated animate__fadeIn animate__faster">
     {% block content %}{% endblock %}
   </div>
 
@@ -239,8 +112,8 @@ image/png" href="{{ url_for('static', filename='favicon.png') }}">
         <div class="row">
           <div class="col-12 col-md-4 mb-4">
             <h5 class="text-white fw-semibold mb-3">About <span class="text-primary">My Project Wall+</span></h5>
-            <p class="text-white small">Built with ❤️ by <strong>EduWarriors</strong> for smart student project management.</p>
-            <p class="text-white small">MIT Licensed • Version <strong class="text-info">v1.0.0</strong></p>
+            <p class="small">Built with ❤️ by <strong>EduWarriors</strong> for smart student project management.</p>
+            <p class="small">MIT Licensed • Version <strong class="text-info">v1.0.0</strong></p>
           </div>
           <div class="col-6 col-md-4 mb-4">
             <h5>Links</h5>
@@ -263,7 +136,7 @@ image/png" href="{{ url_for('static', filename='favicon.png') }}">
           </div>
         </div>
         <hr class="bg-light">
-        <p class="text-center text-white small mb-0">Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+</p>
+        <p class="text-center small mb-0">Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+</p>
       </div>
     </footer>
   {% else %}
@@ -274,6 +147,7 @@ image/png" href="{{ url_for('static', filename='favicon.png') }}">
     </footer>
   {% endif %}
 
+  <!-- ✅ Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
