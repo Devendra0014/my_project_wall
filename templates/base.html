@@ -58,12 +58,11 @@
         <!-- 🔍 Search -->
         <form method="GET" action="/user-search" class="d-flex flex-wrap me-3">
           <input type="text" name="username" class="form-control me-2 mb-2 mb-lg-0" placeholder="Search username..." required>
-          <button class="btn btn-outline-primary" type="submit">🔍</button>
         </form>
 
         <!-- 👤 Auth/Profile -->
-        <ul class="navbar-nav align-items-center">
-          {% if current_user.is_authenticated and request.path != '/' %}
+        <ul class="navbar-nav align-items-stretch">
+          {% if curren.t_user.is_authenticated and request.path != '/' %}
             <li class="nav-item me-3">
               <span class="nav-link fw-semibold">Welcome, {{ current_user.name.split(' ')[0] }} 👋</span>
             </li>
