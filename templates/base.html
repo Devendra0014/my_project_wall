@@ -6,9 +6,168 @@
 
   <!-- ✅ Add this line for favicon -->
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='MPW_logo_only.png') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="My Project Wall+ - Smart project management for students">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="icon" type="<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}My Project Wall{% endblock %}</title>
+
+  <!-- Meta & Icon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="My Project Wall+ - Smart project management for students">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='MPW_logo_only.png') }}">
+
+  <!-- CSS Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <!-- Custom CSS -->
+  <style>
+    .avatar-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sticky-top {
+      z-index: 1020;
+    }
+
+    @media (max-width: 576px) {
+      .navbar-brand span {
+        display: none; /* Hide text on very small devices */
+      }
+      .navbar .form-control {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+      .avatar-img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+        <img src="{{ url_for('static', filename='MPW_logo_only.png') }}" alt="Logo" width="40" height="40" class="rounded shadow-sm">
+        <span>My Project Wall<span class="text-primary">+</span></span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+        <!-- Search -->
+        <form method="GET" action="/user-search" class="d-flex flex-wrap me-3">
+          <input type="text" name="username" class="form-control me-2 mb-2 mb-lg-0" placeholder="Search username..." required>
+          <button class="btn btn-outline-primary" type="submit">🔍</button>
+        </form>
+
+        <!-- User Profile / Auth -->
+        <ul class="navbar-nav align-items-center">
+          {% if current_user.is_authenticated and request.path != '/' %}
+            <li class="nav-item me-3">
+              <span class="nav-link fw-semibold">Welcome, {{ current_user.name.split(' ')[0] }} 👋</span>
+            </li>
+            <li class="nav-item me-3">
+              <a href="/profile" title="Edit Profile">
+                <img src="{{ current_user.avatar_url }}" alt="Profile" class="avatar-img border border-primary shadow-sm">
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a href="/signup" class="btn btn-success btn-sm me-2">Sign Up</a>
+              <a href="/login" class="btn btn-outline-primary btn-sm">Login</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ✅ Flash Messages -->
+  <div class="container mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- ✅ Main Content -->
+  <div class="container mt-4 animate__animated animate__fadeIn animate__faster">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- ✅ Footer -->
+  {% if show_footer %}
+    <footer class="bg-dark text-light mt-5 pt-4 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 mb-4">
+            <h5 class="text-white fw-semibold mb-3">About <span class="text-primary">My Project Wall+</span></h5>
+            <p class="small">Built with ❤️ by <strong>EduWarriors</strong> for smart student project management.</p>
+            <p class="small">MIT Licensed • Version <strong class="text-info">v1.0.0</strong></p>
+          </div>
+
+          <div class="col-6 col-sm-6 col-md-4 mb-4">
+            <h5>Links</h5>
+            <ul class="list-unstyled small">
+              <li><a href="/" class="text-decoration-none text-light">🏠 Home</a></li>
+              <li><a href="/docs" class="text-decoration-none text-light">📘 Docs</a></li>
+              <li><a href="/examples" class="text-decoration-none text-light">🧩 Examples</a></li>
+              <li><a href="/themes" class="text-decoration-none text-light">🎨 Themes</a></li>
+              <li><a href="/blog" class="text-decoration-none text-light">📝 Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="col-6 col-sm-6 col-md-4 mb-4">
+            <h5>Community</h5>
+            <ul class="list-unstyled small">
+              <li><a href="/get-started" class="text-decoration-none text-light">🚀 Getting Started</a></li>
+              <li><a href="/starter" class="text-decoration-none text-light">🔧 Starter Template</a></li>
+              <li><a href="/community" class="text-decoration-none text-light">👥 Community</a></li>
+              <li><a href="https://github.com/Devendra0014/my_project_wall" target="_blank" class="text-decoration-none text-light">💬 GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+        <hr class="bg-light">
+        <p class="text-center small mb-0">Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+</p>
+      </div>
+    </footer>
+  {% else %}
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+      <div class="container">
+        Made with ❤️ by EduWarriors | &copy; 2025 My Project Wall+
+      </div>
+    </footer>
+  {% endif %}
+
+  <!-- ✅ Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+image/png" href="{{ url_for('static', filename='favicon.png') }}">
   <style>
     .avatar-img {
       width: 40px;
