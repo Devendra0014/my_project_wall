@@ -62,7 +62,7 @@
 
         <!-- 👤 Auth/Profile -->
         <ul class="navbar-nav align-items-stretch">
-          {% if curren.t_user.is_authenticated and request.path != '/' %}
+          {% if curren.user.is_authenticated and request.path != '/' %}
             <li class="nav-item me-3">
               <span class="nav-link fw-semibold">Welcome, {{ current_user.name.split(' ')[0] }} 👋</span>
             </li>
