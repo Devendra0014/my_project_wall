@@ -45,7 +45,7 @@ my_project_wall/
 
 🌐 Live Demo
 🟢 Hosted on Render.com
-🔗 https://my-project-wall.onrender.com
+🔗 https://my-project-wall.onrender.com/
 
 📃 License
 MIT Licensed • v1.0.0
